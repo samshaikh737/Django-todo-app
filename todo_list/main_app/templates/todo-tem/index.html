@@ -1,0 +1,70 @@
+{% extends 'todo-tem/base.html' %}
+{% block page_title %}Todo-List{% endblock page_title %}
+
+{% block style %}
+.form-control{
+background-color: #212529;
+}
+.list-group-item{
+background-color:#212529;
+}
+.btn{
+padding:8px 15px;
+}
+{% endblock style %}
+
+
+{% block content %}
+
+<!-- welcome message -->
+
+<welcome_mess>
+    <div class="container-fluid text-center mx-auto">
+        <h1>Todo-List</h1>
+        <h4 class="mt-2 " style="font-size: 2.3rem;color: #e0bb76;">Add your daily list</h4>
+    </div>
+</welcome_mess>
+
+<!-- ----------------------------------- -->
+
+<!-- input  -->
+<todo_input>
+    <div class="container mx-auto">
+
+        <form method="POST">
+            {% csrf_token %}
+            <div class="mb-3 row ">
+                <div class="col-sm-10 mx-auto mt-5 d-flex">
+                    <input type="text" name="input_text" maxlength="200" required="" id="id_input_text"
+                        class="form-control">
+                    <button type="submit" class="btn btn-primary mx-3">Add</button>
+                </div>
+            </div>
+        </form>
+
+    </div>
+</todo_input>
+
+<!-- ----------------------------------- -->
+
+<!-- todo list  -->
+<todo_item>
+    <div class="container ">
+        <ul class="list-group mx-5">
+            {% for item in todo_list %}
+            <form method="POST" action="{% url 'delete' item.id %}">
+                {% csrf_token %}
+                <div class="container d-flex mt-5">
+                    <li class="list-group-item">{{item.input_text}}</li>
+
+                    <button class="btn btn-primary" type="submit">delete</button>
+                </div>
+            </form>
+            {% endfor %}
+        </ul>
+    </div>
+</todo_item>
+
+<!-- ----------------------------------- -->
+
+{% endblock content %}
